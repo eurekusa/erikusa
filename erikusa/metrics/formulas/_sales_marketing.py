@@ -1,5 +1,4 @@
-import numpy as np
-
+import numpy as np 
 def _cagr(
     begin=None,
     final=None,
@@ -22,7 +21,7 @@ def _growth(
         return (final-begin)/begin
     except:
         return np.NaN
-        
+
 def _evolution_index(
     brand=None,
     market=None,
@@ -35,3 +34,5 @@ def _evolution_index(
             return ((brand*100)+100)/((market*100)+100)
     except:
         return np.NaN
+def _irr(cashflows=None):
+    return np.irr(cashflows)
