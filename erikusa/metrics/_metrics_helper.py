@@ -1,7 +1,7 @@
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
 
-def build_dataframe(args, constructor,numerical_columns=True):
+def build_dataframe(args, numerical_columns=True):
     """
     Constructs a dataframe and modifies `args` in-place.
     The argument values in `args` can be either strings corresponding to
