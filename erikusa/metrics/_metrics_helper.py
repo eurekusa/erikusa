@@ -1,27 +1,25 @@
+"""
+Defines helper function for metrics calculation.
+"""
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
 
 def build_dataframe(args, numerical_columns=True):
     """
-    Constructs a dataframe and modifies `args` in-place.
+    Constructs a dataframe.
     The argument values in `args` can be either strings corresponding to
     existing columns of a dataframe, or data arrays (lists, numpy arrays,
     pandas columns, series).
     Parameters
     ----------
     args : OrderedDict
-        arguments passed to the px function and subsequently modified
-    constructor : graph_object trace class
-        the trace type selected for this figure
+        arguments passed to the function.
+    numerical_columns : bool, default True.
+        Whether to check that dataframe values are numerical or not.
+    Returns
+    ----------
+    dataframe : Pandas' DataFrame.
     """
-    for field in args:
-        if field in array_attrables and args[field] is not None:
-            args[field] = (
-                dict(args[field])
-                if isinstance(args[field], dict)
-                else list(args[field])
-            )
-
     df_provided = args["data_frame"] is not None
     if df_provided and not isinstance(args["data_frame"], pd.DataFrame):
         args["data_frame"] = pd.DataFrame(args["data_frame"])
@@ -48,9 +46,11 @@ def build_dataframe(args, numerical_columns=True):
                 "When data is not provided, iterable variable must be provided instead."
             )
     if numerical_columns:
-        if (is_numeric_dtype(args['x']) and is_numeric_dtype(args['y'])):
+        if (is_numeric_dtype(pd.Series(args['x'])) and is_numeric_dtype(pd.Series(args['y']))):
             return pd.DataFrame({args['x_col']:args['x'],args['y_col']:args['y']})
         else:
             raise TypeError(
                 "Both columns must be of a numerical dtype."
             )
+    else:
+        return pd.DataFrame({args['x_col']:args['x'],args['y_col']:args['y']})
